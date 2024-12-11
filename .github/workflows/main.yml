@@ -21,7 +21,11 @@ jobs:
 
      #finally build your app with the latest command
       - name: Build and test with Maven
-        run: mvn -B package --file simple-api/pom.xml
+        env:
+
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}   
+        run: mvn -B verify sonar:sonar -Dsonar.projectKey=StritanS_devops-livecoding -Dsonar.organization=devops-livecoding -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}  --file ./simple-api/pom.xml
+
 
   build-and-push-docker-image:
     # Specifies the environment to run the job on (Ubuntu 22.04)
